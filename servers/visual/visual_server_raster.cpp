@@ -101,6 +101,12 @@ void VisualServerRaster::draw(bool p_swap_buffers, double frame_step) {
 	changes[0] = 0;
 	changes[1] = 0;
 
+	// COLUGO:
+	// This line is added to allow OpenGL-based audio plugins to work in Blockhead
+	// without just crashing the graphics driver. This ensures that the correct GL
+	// context is bound before Godot does its rendering.
+	OS::get_singleton()->make_rendering_thread();
+
 	VSG::rasterizer->begin_frame(frame_step);
 
 	VSG::scene->update_dirty_instances(); //update scene stuff
